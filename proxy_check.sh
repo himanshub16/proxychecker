@@ -1,5 +1,5 @@
 #!/bin/bash
-# proxy_check v1.1
+# proxy_check v1.2
 # Author : Himanshu Shekhar < https://github.com/himanshushekharb16/ProxyMan >
 
 # This program is free software; you can redistribute it and/or modify
@@ -47,6 +47,20 @@ if [[ -e "$HOME/.bash_profile" ]]; then
 	fi
 else
 	echo ".bash_profile does not exist."
+fi
+
+echo 
+
+if [[ -e "/etc/environment" ]]; then
+	a=$(printenv | grep -i proxy)
+	if [[ a -eq 0 ]]; then
+		echo "/etc/environment is not using proxy."
+	else
+		echo "For /etc/envrionment..."
+		printenv | grep -i proxy
+	fi
+else
+	echo "/etc/environment does not exist."
 fi
 
 echo
