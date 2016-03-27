@@ -1,5 +1,5 @@
 #!/bin/bash
-# proxy_check v1.2
+# proxy_check v1.3
 # Author : Himanshu Shekhar < https://github.com/himanshushekharb16/ProxyMan >
 
 # This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 # 02111-1307, USA.
 #
 # This is a simple tool to check proxy configurations for GNU/Linux distributions of
-# the Debian/Ubuntu familiy. Helps in debugging.
+# the Debian/Ubuntu/Fedora familiy. Helps in debugging.
 # The README.md file provides more information.
 
 
@@ -65,11 +65,24 @@ fi
 
 echo
 
-if [[ -e "/etc/apt/apt.conf" ]]; then
-	echo "This is apt.conf ..."
-	cat "/etc/apt/apt.conf"
-else
-	echo "apt is not using proxy."
+# if apt is installed
+if [[ -e "/etc/apt/" ]]; then
+	if [[ -e "/etc/apt/apt.conf" ]]; then
+		echo "This is apt.conf ..."
+		cat "/etc/apt/apt.conf"
+	else
+		echo "apt is not using proxy."
+	fi
+fi
+
+# if dnf is installed
+if [[ -e "/etc/dnf" ]]; then
+	if [[ -e "/etc/dnf/dnf.conf" ]]; then
+		echo "This is dnf.conf"
+		cat "/etc/dnf/dnf.conf" | grep "proxy"
+	else
+		echo "dnf.conf does not use proxy"
+	fi
 fi
 
 echo
