@@ -23,6 +23,24 @@
 
 
 #!/bin/bash
+
+read -p "Do you want to check for /etc/environment ? (This requires root/sudo) (y/n) "  envpr
+if [[ $envpr == "y" ]]; then
+	if [[ -e "/etc/environment" ]]; then
+		a=$(printenv | grep -i proxy)
+		if [[ a -eq 0 ]]; then
+			echo "/etc/environment is not using proxy."
+		else
+			echo "For /etc/envrionment..."
+			printenv | grep -i proxy
+		fi
+	else
+		echo "/etc/environment does not exist."
+	fi
+fi
+
+echo
+
 if [[ -e "$HOME/.bashrc" ]]; then
 	a=$(grep -i proxy $HOME/.bashrc | wc -l)
 	if [[ a -eq 0 ]]; then
@@ -50,20 +68,6 @@ else
 fi
 
 echo 
-
-if [[ -e "/etc/environment" ]]; then
-	a=$(printenv | grep -i proxy)
-	if [[ a -eq 0 ]]; then
-		echo "/etc/environment is not using proxy."
-	else
-		echo "For /etc/envrionment..."
-		printenv | grep -i proxy
-	fi
-else
-	echo "/etc/environment does not exist."
-fi
-
-echo
 
 # if apt is installed
 if [[ -e "/etc/apt/" ]]; then
